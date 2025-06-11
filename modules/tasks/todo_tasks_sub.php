@@ -39,6 +39,11 @@ $showInProgress = $AppUI->getState('TaskDayShowInProgress', 0);
 if(!isset($tasks) || !count($tasks)) {
     global $tasks;
 }
+if(!isset($tasks) || !count($tasks)) {
+    $tasks = [];
+}
+/** End nasty, dirty hack */
+
 $perms = &$AppUI->acl();
 $canDelete = $perms->checkModuleItem($m, 'delete');
 ?>
