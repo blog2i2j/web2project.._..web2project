@@ -63,6 +63,7 @@ class CTask extends w2p_Core_BaseObject
     public $task_updator = null;
     public $task_allow_other_user_tasklogs;
     public $task_path_enumeration = null;
+    public $task_represents_project = null;
 
     /*
      * TASK DYNAMIC VALUE:
