@@ -1574,7 +1574,7 @@ CREATE TABLE `resources` (
   `resource_name` varchar(255) NOT NULL default '',
   `resource_key` varchar(64) NOT NULL default '',
   `resource_type` int(10) NOT NULL default '0',
-  `resource_note` text NOT NULL,
+  `resource_note` text NOT NULL default '',
   `resource_max_allocation` int(10) NOT NULL default '100',
   PRIMARY KEY  (`resource_id`),
   KEY `resource_name` (`resource_name`),
