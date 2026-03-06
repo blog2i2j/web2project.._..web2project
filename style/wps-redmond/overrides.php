@@ -12,7 +12,7 @@ class style_wpsredmond extends w2p_Theme_Base
     }
 
     public function styleRenderBoxTop() {       return ''; }
-    public function styleRenderBoxBottom() {    return ''; }
+    public function styleRenderBoxBottom($tab = 0) {    return ''; }
 }
 
 /**
