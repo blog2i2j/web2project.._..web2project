@@ -25,8 +25,14 @@ ALTER TABLE `sessions` CHANGE `session_created` `session_created` DATETIME NOT N
 ALTER TABLE `sessions` CHANGE `session_user` `session_user` INT NOT NULL DEFAULT '0';
 
 # 2026 Update - setting to eliminate '0000-00-00 00:00:00' datetimes
+UPDATE `contacts` SET `contact_birthday` = NULL WHERE CAST(`contact_birthday` AS CHAR(20)) = '0000-00-00 00:00:00';
+ALTER TABLE `forum_messages` CHANGE `message_date` `message_date` DATETIME NULL DEFAULT NULL;
+UPDATE `forum_messages` SET `message_date` = NULL WHERE CAST(`message_date` AS CHAR(20)) = '0000-00-00 00:00:00';
 ALTER TABLE `projects` CHANGE `project_end_date` `project_end_date` DATETIME NULL;
 UPDATE `projects` SET `project_end_date` = NULL WHERE CAST(`project_end_date` AS CHAR(20)) = '0000-00-00 00:00:00';
+UPDATE `tasks` SET `task_end_date` = NULL WHERE CAST(`task_end_date` AS CHAR(20)) = '0000-00-00 00:00:00';
+UPDATE `tasks` SET `task_start_date` = NULL WHERE CAST(`task_start_date` AS CHAR(20)) = '0000-00-00 00:00:00';
+UPDATE `users` SET `user_birthday` = NULL WHERE CAST(`user_birthday` AS CHAR(20)) = '0000-00-00 00:00:00';
 
 # 20061119
 # archived status, do the second line only if project_status name matches 'Archived'
