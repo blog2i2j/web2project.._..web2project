@@ -22,7 +22,7 @@
 
 class w2p_Output_HTML_FormHelperTest extends CommonSetup
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

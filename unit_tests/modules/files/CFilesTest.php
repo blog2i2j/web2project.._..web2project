@@ -19,7 +19,7 @@
 class CFilesTest extends CommonSetup
 {
 
-    protected function setUp()
+    protected function setUp(): void
     {
       parent::setUp();
 
@@ -199,7 +199,7 @@ class CFilesTest extends CommonSetup
         $this->assertEquals($this->obj->file_real_filename,     $item->file_real_filename);
         $this->assertEquals($this->obj->file_parent,            $item->file_parent);
         $this->assertEquals($this->obj->file_description,       $item->file_description);
-        $this->assertNotEquals($this->obj->file_date,           '');
+        $this->assertNotNull($this->obj->file_date);
     }
 
     /**

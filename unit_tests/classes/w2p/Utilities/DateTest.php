@@ -46,7 +46,7 @@ class w2p_Utilities_DateTest extends CommonSetup
     /**
      * Save our global settings before running tests
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         global $w2Pconfig;
 
@@ -66,7 +66,7 @@ class w2p_Utilities_DateTest extends CommonSetup
     /**
      * Restore our global settings after running tests
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         global $w2Pconfig;
 

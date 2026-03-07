@@ -10,16 +10,27 @@ $loginFromPage = 'index.php';
 require_once 'base.php';
 
 clearstatcache();
-if (is_file(W2P_BASE_DIR . '/includes/config.php') && filesize(W2P_BASE_DIR . '/includes/config.php') > 0) {
-	require_once W2P_BASE_DIR . '/includes/config.php';
-	if (isset($dPconfig)) {
-		echo '<html><head><meta http-equiv="refresh" content="5; URL=' . W2P_BASE_URL . '/install/index.php"></head><body>';
-		echo 'Fatal Error. It appears you\'re converting from dotProject.<br/><a href="./install/index.php">' . 'Click Here To Start the Conversion!</a> (forwarded in 5 sec.)</body></html>';
-		exit();
-	}
-} else {
+
+// Checks that we've run composer
+if (!is_file(W2P_BASE_DIR . '/vendor/autoload.php')) {
+	echo '<html><head></head><body>';
+	echo 'Fatal Error. You must use Composer to install dependencies. For full install instructions, please visit the <a href="https://docs.web2project.net/docs/installation.html">web2Project Install Guide</a></body></html>';
+	exit();
+}
+
+// Checks if we've finished the install process
+if (!file_exists(W2P_BASE_DIR . '/includes/config.php') || filesize(W2P_BASE_DIR . '/includes/config.php') == 0) {
 	echo '<html><head><meta http-equiv="refresh" content="5; URL=' . W2P_BASE_URL . '/install/index.php"></head><body>';
 	echo 'Fatal Error. You haven\'t created a config file yet.<br/><a href="./install/index.php">' . 'Click Here To Start Installation and Create One!</a> (forwarded in 5 sec.)</body></html>';
+	exit();
+}
+
+require_once W2P_BASE_DIR . '/includes/config.php';
+
+// Check if we are converting from dotProject
+if (isset($dPconfig)) {
+	echo '<html><head><meta http-equiv="refresh" content="5; URL=' . W2P_BASE_URL . '/install/index.php"></head><body>';
+	echo 'Fatal Error. It appears you\'re converting from dotProject.<br/><a href="./install/index.php">' . 'Click Here To Start the Conversion!</a> (forwarded in 5 sec.)</body></html>';
 	exit();
 }
 
@@ -76,6 +87,9 @@ if (isset($user_id) && isset($_GET['logout'])) {
 
 // set the default ui style
 $uistyle = $AppUI->getPref('UISTYLE') ? $AppUI->getPref('UISTYLE') : w2PgetConfig('host_style');
+$uistyle = ($uistyle == 'default') ? 'web2project' : $uistyle;
+$AppUI->setPref('UISTYLE', $uistyle);
+
 include W2P_BASE_DIR . '/style/' . $uistyle . '/overrides.php';
 $uiName = str_replace('-', '', $uistyle);
 

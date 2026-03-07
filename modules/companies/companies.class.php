@@ -47,7 +47,7 @@ class CCompany extends w2p_Core_BaseObject {
     {
         $baseErrorMsg = get_class($this) . '::store-check failed - ';
 
-        if ('' == trim($this->company_name)) {
+        if ('' == trim((string) $this->company_name)) {
             $this->_error['company_name'] = $baseErrorMsg . 'company name is not set';
         }
 

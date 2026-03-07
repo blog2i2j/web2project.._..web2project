@@ -1,16 +1,16 @@
-<table cellspacing="2" cellpadding="4" border="0" class="tbl info" width="100%" style="border-radius: 10px;">
+<table cellspacing="2" cellpadding="4" border="0" class="tbl info" width="80%" style="border-radius: 10px;">
     <tr><th><span><?php echo sprintf($AppUI->_('Welcome to %s'), 'web2Project'); ?></span></th></tr>
     <tr>
         <td>
-            <p><?php echo sprintf($AppUI->_('%s is an Open Source business oriented Project Management System (PMS) built for the future.'), '<a href="http://www.web2Project.net/" target="_blank"><b>web2Project</b></a>'); ?>
+            <p><?php echo sprintf($AppUI->_('%s is an Open Source business oriented Project Management System (PMS) built for flexibility and reuse.'), '<a href="http://www.web2Project.net/" target="_blank"><b>web2Project</b></a>'); ?>
                 <?php echo sprintf($AppUI->_('Some of the key benefits of %s are'), '<b>web2Project</b>'); ?>:</p>
             <ul>
                 <li><?php echo $AppUI->_('A centralized platform for project communication to avoid confusion and risks'); ?></li>
-                <li><?php echo $AppUI->_('Gantt charts to describe both the task and overall project level'); ?></li>
+                <li><?php echo $AppUI->_('Gantt charts to describe both the task and overall project progress'); ?></li>
                 <li><?php echo $AppUI->_('A secure web-based infrastructure capable of managing any amount of projects, companies, departments and users'); ?></li>
-                <li><?php echo $AppUI->_('A modular infrastructure that allows adding and removing core and custom modules to aid the Project Manager in his job from the cleanest to the meanest business environments'); ?></li>
-                <li><?php echo $AppUI->_('A role-based permission system to make the user management flexible to give the Project Manager fine-grained control over sensitive data'); ?></li>
-                <li><?php echo $AppUI->_('A shared calendar capturing tasks and events across projects but still limited by roles and permissions'); ?></li>
+                <li><?php echo $AppUI->_('A modular infrastructure that allows adding and removing modules customize the system, activites, and reporting to your business needs'); ?></li>
+                <li><?php echo $AppUI->_('A role-based and relationship-based access control system (ReBAC and RBAC) to give fine-grained control over sensitive data'); ?></li>
+                <li><?php echo $AppUI->_('A shared calendar capturing tasks and events across projects that respects permissions'); ?></li>
             </ul>
         </td>
     </tr>
@@ -20,33 +20,21 @@
             <p><?php echo $AppUI->_('We have 3 main places for your assistance, and 1 link for custom development help. Please remember that all of these places are our community. You can help others as well by contributing your thoughts and problems you\'re having, as well as the solutions you develop. This is "open source software" at it\'s best; we\'re all in this together.'); ?></p>
             <p><?php echo $AppUI->_('Here are several places where you can find help online:'); ?></p>
 
-            <h1>web2Project Online Documentation/Wiki</h1>
+            <h1>web2Project Docs</h1>
             <ul>
-                <li>The <a href="https://docs.web2project.net/">Wiki contains information about how to use web2Project</a> (e.g. explanation of modules, features, training, etc). The wiki is also a community project and you are invited to contribute to it. Learn more about <a href="https://docs.web2project.net/docs/join-the-team.html">becoming a member of the team, just click here</a>.</li>
+                <li>The <a href="https://docs.web2project.net/">web2project Wiki</a> (e.g. explanation of modules, features, the Hook system, etc). The wiki is also a community project and you are invited to contribute to it. Learn more about <a href="https://docs.web2project.net/docs/join-the-team.html">becoming a member of the team, just click here</a>.</li>
                 <li>Find some <a href="https://github.com/web2project">additional community created User Guides (pictures and everything!) right here</a>. Download them and open the files! They're a few years old at this point but you may still find the answer you're looking for in there.</li>
             </ul>
-            <h1>web2Project Support Forums</h1>
+            <h1>web2Project Forums</h1>
             <ul>
                 <li>Find the <a href="http://support.web2project.net/">current support forum here</a>.</li>
                 <li>Our <a href="http://forums.web2project.net/">previous support forum</a> has a lot of good information in it, and can still be accessed. This one is not officially supported anymore so don't drop anything new in it and expect an answer!</li>
             </ul>
-            <h1>web2Project Known Bugs, Bug Submissions, and Feature Suggestion/Submission</h1>
+            <h1>web2Project Issue Tracker</h1>
             <ul>
                 <li>For those of you who are a bit more advanced in your open source software involvement, information about known problems and suggested enhancements can be read and submitted at <a href="http://bugs.web2project.net/my_view_page.php">our Mantis site account</a>.</li>
             </ul>
-            <h1>Professional Support and/or Project Development</h1>
-            <ul>
-                <li>If you're looking for Professional Support concerning web2Project, or have a custom coding project you'd like someone to work on, consider getting in touch with the top contributors directly on the support forums.</li>
-            </ul>
             <p>Thanks for using web2Project!</p>
-        </td>
-    </tr>
-    <tr><th><span><?php echo $AppUI->_('Terms of Use'); ?></span></th></tr>
-    <tr>
-        <td>
-            <p><?php echo sprintf($AppUI->_('Each organization may have different Terms of Use for the %s software, depending on applicable law and regulations on each Country and/or State, and inner organization usage and workflow rules.'), '<b>web2Project</b>'); ?>
-                <?php echo $AppUI->_('Please contact your System Administrator to get a copy of the Terms of Use applicable to you.'); ?></p>
-            <p><b><?php echo $AppUI->_('All uses of this product against the Law are forbidden.'); ?></b></p>
         </td>
     </tr>
     <tr><th><span><?php echo $AppUI->_('License and Disclaimer or Warranty'); ?></span></th></tr>

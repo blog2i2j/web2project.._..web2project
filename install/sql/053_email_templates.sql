@@ -9,4 +9,4 @@ CREATE TABLE `email_templates` (
   `email_template_subject` varchar(255) NOT NULL,
   `email_template_body` text NOT NULL,
   PRIMARY KEY (`email_template_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

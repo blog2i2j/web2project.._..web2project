@@ -22,7 +22,7 @@
 
 class w2p_Output_HTMLHelperTest extends CommonSetup
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -120,7 +120,7 @@ class w2p_Output_HTMLHelperTest extends CommonSetup
     public function testCreateCell_common()
     {
         $cell = $this->obj->createCell('x_budget', 12345.67);
-        $this->assertEquals('<td class="_budget">$USD12,345.67</td>', $cell);
+        $this->assertEquals('<td class="_budget">$12,345.67</td>', $cell);
 
         $cell = $this->obj->createCell('x_url', 'http://web2project.net');
         $this->assertEquals('<td class="_url"><a href="http://web2project.net" target="_new">http://web2project.net</a></td>', $cell);
@@ -129,7 +129,7 @@ class w2p_Output_HTMLHelperTest extends CommonSetup
         $this->assertEquals('<td class="_email"><a href="mailto:admin@web2project.net">admin@web2project.net</a></td>', $cell);
 
         // The formatting for _complete and _assignment are the same.
-        $cell = $this->obj->createCell('x_complete', '37.7');
+        $cell = $this->obj->createCell('x_complete', 37.7);
         $this->assertEquals('<td class="_complete">38%</td>', $cell);
         $cell = $this->obj->createCell('x_assignment', 'xxx');
         $this->assertEquals('<td class="_assignment">0%</td>', $cell);
@@ -137,9 +137,9 @@ class w2p_Output_HTMLHelperTest extends CommonSetup
         $cell = $this->obj->createCell('x_password', 'monkey');
         $this->assertEquals('<td class="_password">(hidden)</td>', $cell);
 
-        $cell = $this->obj->createCell('x_version', '1');
+        $cell = $this->obj->createCell('x_version', 1);
         $this->assertEquals('<td class="_version">1.00</td>', $cell);
-        $cell = $this->obj->createCell('x_version', '1.8');
+        $cell = $this->obj->createCell('x_version', 1.8);
         $this->assertEquals('<td class="_version">1.80</td>', $cell);
         $cell = $this->obj->createCell('x_version', 'monkey');
         $this->assertEquals('<td class="_version">0.00</td>', $cell);

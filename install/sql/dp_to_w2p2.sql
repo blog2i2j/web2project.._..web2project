@@ -113,8 +113,7 @@ UPDATE `modules` SET `permissions_item_table` = 'departments', `permissions_item
 UPDATE `config` SET `config_value` = "web2project" WHERE `config_name` = "host_style";
 UPDATE `config` SET `config_value` = "[web2Project]" WHERE `config_name` = "email_prefix" AND `config_value` = "[dotProject]";
 
-#Add New sysvals:
-ALTER TABLE `sysvals` DROP INDEX `idx_sysval_title`;
+# Add New sysvals:
 INSERT INTO `sysvals` (`sysval_key_id`, `sysval_title`, `sysval_value`, `sysval_value_id`) VALUES (1, 'GlobalYesNo', 'No', '0');
 INSERT INTO `sysvals` (`sysval_key_id`, `sysval_title`, `sysval_value`, `sysval_value_id`) VALUES (1, 'GlobalYesNo', 'Yes', '1');
 INSERT INTO `sysvals` (`sysval_key_id`, `sysval_title`, `sysval_value`, `sysval_value_id`) VALUES (1, 'UserType', 'Default User', '0');
@@ -369,7 +368,7 @@ INSERT INTO `sysvals` (`sysval_key_id`, `sysval_title`, `sysval_value`, `sysval_
 INSERT INTO `sysvals` (`sysval_key_id`, `sysval_title`, `sysval_value`, `sysval_value_id`) VALUES (1, 'GlobalCountries', 'Zaire', 'ZR');
 INSERT INTO `sysvals` (`sysval_key_id`, `sysval_title`, `sysval_value`, `sysval_value_id`) VALUES (1, 'GlobalCountries', 'Zimbabwe', 'ZW');
 
-#To make project designer the default viewer of projects, false by default so that normal view is still used instead.
+# To make project designer the default viewer of projects, false by default so that normal view is still used instead.
 INSERT INTO `config` VALUES (0, 'projectdesigner_view_project', 'false', '', 'checkbox');
 
 #Extra Indexes for Order By
@@ -389,7 +388,6 @@ ALTER TABLE `files` ADD INDEX ( `file_name` );
 ALTER TABLE `tasks` ADD INDEX ( `task_priority` );
 ALTER TABLE `user_tasks` ADD INDEX ( `perc_assignment` );
 ALTER TABLE `tasks` ADD INDEX ( `task_name` );
-ALTER TABLE `forums` ADD INDEX ( `forum_name` );
 ALTER TABLE `task_log` ADD INDEX ( `task_log_date` );
 ALTER TABLE `billingcode` ADD INDEX ( `billingcode_name` );
 ALTER TABLE `task_log` ADD INDEX ( `task_log_creator` );
@@ -398,11 +396,10 @@ ALTER TABLE `gacl_permissions` ADD INDEX ( `action` );
 ALTER TABLE `sysvals` ADD INDEX ( `sysval_title` );
 ALTER TABLE `projects` ADD INDEX ( `project_parent` );
 
-#Extra Indexes for Group By
-ALTER TABLE `user_access_log` ADD INDEX ( `date_time_last_action` );
+# Extra Indexes for Group By
 ALTER TABLE `files` ADD INDEX ( `file_folder` );
 
-#Extra Indexes for Where
+# Extra Indexes for Where
 ALTER TABLE `contacts` ADD INDEX ( `contact_updatekey` );
 ALTER TABLE `contacts` ADD INDEX ( `contact_email` );
 ALTER TABLE `custom_fields_values` ADD INDEX ( `value_field_id` );
@@ -414,8 +411,6 @@ ALTER TABLE `custom_fields_struct` ADD INDEX ( `field_page` );
 ALTER TABLE `modules` ADD INDEX ( `mod_active` );
 ALTER TABLE `modules` ADD INDEX ( `mod_directory` );
 ALTER TABLE `user_preferences` ADD INDEX ( `pref_user` );
-ALTER TABLE `user_access_log` ADD INDEX ( `date_time_in` );
-ALTER TABLE `user_access_log` ADD INDEX ( `date_time_out` );
 ALTER TABLE `modules` ADD INDEX ( `permissions_item_table` );
 ALTER TABLE `users` ADD INDEX ( `user_contact` );
 ALTER TABLE `events` ADD INDEX ( `event_recurs` );
@@ -432,7 +427,7 @@ ALTER TABLE `task_log` ADD INDEX ( `task_log_costcode` );
 ALTER TABLE `billingcode` ADD INDEX ( `billingcode_status` );
 ALTER TABLE `sysvals` ADD INDEX ( `sysval_key_id` );
 
-#Extra Indexes for Joins
+# Extra Indexes for Joins
 ALTER TABLE `sessions` ADD INDEX ( `session_user` );
 ALTER TABLE `tasks` ADD INDEX ( `task_creator` );
 ALTER TABLE `forum_messages` ADD INDEX ( `message_author` );
@@ -451,9 +446,13 @@ ALTER TABLE `project_contacts` ADD INDEX ( `contact_id` );
 ALTER TABLE `task_contacts` ADD INDEX ( `task_id` );
 ALTER TABLE `task_contacts` ADD INDEX ( `contact_id` );
 
-#Further improvements
-ALTER TABLE `contacts` CHANGE `contact_company` `contact_company` INT( 11 ) NOT NULL DEFAULT "0";
-ALTER TABLE `contacts` CHANGE `contact_department` `contact_department` INT( 11 ) NOT NULL DEFAULT "0";
+# Further improvements
+UPDATE `contacts` SET `contact_company` = 0 WHERE `contact_company` = '';
+ALTER TABLE `contacts` CHANGE `contact_company` `contact_company` INT NULL;
+UPDATE `contacts` SET `contact_company` = NULL WHERE `contact_company` = 0;
+UPDATE `contacts` SET `contact_department` = 0 WHERE `contact_department` = '';
+ALTER TABLE `contacts` CHANGE `contact_department` `contact_department` INT NULL;
+UPDATE `contacts` SET `contact_department` = NULL WHERE `contact_department` = 0;
 ALTER TABLE `contacts` ADD INDEX ( `contact_department` );
 ALTER TABLE `files` CHANGE `file_checkout` `file_checkout` VARCHAR( 16 ) NOT NULL DEFAULT "";
 ALTER TABLE `departments` CHANGE `dept_name` `dept_name` VARCHAR( 255 ) NOT NULL DEFAULT "";
@@ -462,7 +461,7 @@ ALTER TABLE `task_departments` ADD INDEX ( `task_id` );
 ALTER TABLE `task_departments` ADD INDEX ( `department_id` );
 ALTER TABLE `user_task_pin` ADD INDEX ( `task_id` );
 
-#Deprecated tables
+# Deprecated tables
 DROP TABLE IF EXISTS `custom_fields_option_id`;
 DROP TABLE IF EXISTS `custom_fields_struct_id`;
 DROP TABLE IF EXISTS `custom_fields_values_id`;
@@ -472,42 +471,41 @@ DROP TABLE IF EXISTS `user_roles`;
 DROP TABLE IF EXISTS `webcal_projects`;
 DROP TABLE IF EXISTS `webcal_resources`;
 
-#Convert the dpversion table to w2p version
+# Convert the dpversion table to w2p version
 CREATE TABLE `w2pversion` (
-  `code_revision` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `code_version` varchar(10) NOT NULL default '',
   `db_version` int(10) NOT NULL default '0',
   `last_db_update` date NOT NULL default '1000-01-01',
   `last_code_update` date NOT NULL default '1000-01-01',
-  PRIMARY KEY  (`code_revision`)
+  PRIMARY KEY  (`code_version`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 UPDATE `dpversion` SET `last_db_update` = '1000-01-01' where `last_db_update` < '1000-01-01';
 UPDATE `dpversion` SET `last_code_update` = '1000-01-01' where `last_code_update` < '1000-01-01';
 INSERT INTO `w2pversion` SELECT * from `dpversion`;
 RENAME TABLE `dpversion` TO `old_dpversion`;
 
-#Deprecated indexes
+# Deprecated indexes
 ALTER TABLE `syskeys` DROP INDEX `idx_syskey_name`;
 ALTER TABLE `users` DROP INDEX `idx_user_parent`;
 ALTER TABLE `user_tasks` DROP INDEX `user_type`;
 
-#Delete the project_departments records when the department record has been deleted
+# Delete the project_departments records when the department record has been deleted
 DELETE FROM project_departments USING project_departments LEFT JOIN departments ON department_id = dept_id WHERE dept_id IS NULL;
 
-#22/02/2008
-#New fields needed for departments and user deletion check
+# 22/02/2008
+# New fields needed for departments and user deletion check
 ALTER TABLE `departments` ADD `dept_email` VARCHAR(255) DEFAULT '' NOT NULL;
 ALTER TABLE `departments` ADD `dept_type` INT(3) UNSIGNED NOT NULL DEFAULT '0';
 ALTER TABLE `projects` ADD `project_updator` INT(10) DEFAULT 0 NOT NULL;
 ALTER TABLE `projects` ADD `project_updated` datetime NOT NULL default '1000-01-01 00:00:00';
 ALTER TABLE `tasks` ADD `task_updator` INT(10) DEFAULT 0 NOT NULL;
-ALTER TABLE `tasks` ADD `task_created` datetime NOT NULL default '1000-01-01 00:00:00';
-ALTER TABLE `tasks` ADD `task_updated` datetime NOT NULL default '1000-01-01 00:00:00';
+ALTER TABLE `tasks` ADD `task_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE `tasks` ADD `task_updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE `task_log` ADD `task_log_updator` INT(10) DEFAULT 0 NOT NULL;
-ALTER TABLE `task_log` ADD `task_log_updated` datetime NOT NULL default '1000-01-01 00:00:00';
-ALTER TABLE `task_log` ADD `task_log_created` datetime NOT NULL default '1000-01-01 00:00:00';
+ALTER TABLE `task_log` ADD `task_log_updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE `task_log` ADD `task_log_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
-#new PHPMailer SMTP options
+# new PHPMailer SMTP options
 INSERT INTO `config` (`config_name`, `config_value`, `config_group`, `config_type`) VALUES ('mail_secure', '', 'mail', 'select');
 INSERT INTO `config` (`config_name`, `config_value`, `config_group`, `config_type`) VALUES ('mail_debug', 'false', 'mail', 'checkbox');
 INSERT INTO `config_list` (`config_id`, `config_list_name`) VALUES 
@@ -517,25 +515,25 @@ INSERT INTO `config_list` (`config_id`, `config_list_name`) VALUES
 INSERT INTO `config_list` (`config_id`, `config_list_name`) VALUES 
 	((SELECT `config_id` FROM `config` WHERE `config_name` = 'mail_secure'), 'ssl');
 
-#Department types
+# Department types
 INSERT INTO `sysvals` (`sysval_key_id`, `sysval_title`, `sysval_value`, `sysval_value_id`) VALUES (1, 'DepartmentType', 'Not Defined', '0');
 INSERT INTO `sysvals` (`sysval_key_id`, `sysval_title`, `sysval_value`, `sysval_value_id`) VALUES (1, 'DepartmentType', 'Profit', '1');
 INSERT INTO `sysvals` (`sysval_key_id`, `sysval_title`, `sysval_value`, `sysval_value_id`) VALUES (1, 'DepartmentType', 'Cost', '2');
 
-#Company Description fix 20080304
+# Company Description fix 20080304
 ALTER TABLE `companies` CHANGE `company_description` `company_description` TEXT NULL;
 
-#Tasks Collpase/Expand User Default Value
-#We should have one for each user
+# Tasks Collpase/Expand User Default Value
+# We should have one for each user
 INSERT INTO `user_preferences` ( `pref_user` , `pref_name` , `pref_value` ) VALUES ('0', 'TASKSEXPANDED', '1');
 
-#Add config key to set the Template status id, so we can remove them from calculations
+# Add config key to set the Template status id, so we can remove them from calculations
 INSERT INTO `config` VALUES (0, 'template_projects_status_id', '6', 'projects', 'text');
 
-#Add the reset_memory_limit for converted systems
+# Add the reset_memory_limit for converted systems
 INSERT INTO `config` (`config_name`, `config_value`, `config_group`, `config_type`) VALUES ('reset_memory_limit', '64M', 'admin_system', 'text');
 
-#Fix Config Groupings in a more readeable way:
+# Fix Config Groupings in a more readeable way:
 UPDATE `config` SET `config_group` = 'admin_system' WHERE `config_name` = 'company_name';
 UPDATE `config` SET `config_group` = 'admin_system' WHERE `config_name` = 'debug';
 UPDATE `config` SET `config_group` = 'admin_system' WHERE `config_name` = 'display_debug';
@@ -607,23 +605,22 @@ UPDATE `config` SET `config_group` = 'tasks' WHERE `config_name` = 'task_reminde
 UPDATE `config` SET `config_group` = 'tasks' WHERE `config_name` = 'task_reminder_repeat';
 DELETE FROM `config` WHERE `config_name` = 'link_tickets_kludge';
 
-#20/07/2008
+# 20/07/2008
 # Trying to avoid the error:
 # "Data too long for column 'project_percent_complete'" and probably to 'project_duration' too.
 # By changing those fields data types from VARCHAR to FLOAT.
 ALTER TABLE `tasks_sum` CHANGE `project_percent_complete` `project_percent_complete` FLOAT NULL DEFAULT NULL;
 ALTER TABLE `tasks_sum` CHANGE `project_duration` `project_duration` FLOAT NULL DEFAULT NULL; 
 
-#20090128
+# 20090128
 ALTER TABLE `w2pversion` ADD `code_revision` INT( 10 ) NOT NULL FIRST ;
-ALTER TABLE `w2pversion` ADD PRIMARY KEY ( `code_revision` );
 TRUNCATE TABLE `w2pversion`;
 INSERT INTO `w2pversion` (`code_revision` ,`code_version` ,`db_version` ,`last_db_update` ,`last_code_update`)
 	VALUES ('427', '1.0.0', '1', now(), now());
 
-#20090224
+# 20090224
 ALTER TABLE `custom_fields_struct` ADD `field_published` TINYINT( 1 ) NOT NULL DEFAULT '0';
 UPDATE `custom_fields_struct` SET field_published = 1;
 
-#20090309
+# 20090309
 UPDATE `projects` SET `project_parent` = `project_id`, `project_original_parent` = `project_id`;

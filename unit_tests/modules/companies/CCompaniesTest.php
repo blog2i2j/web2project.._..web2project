@@ -19,7 +19,7 @@
 class CCompaniesTest extends CommonSetup
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -216,7 +216,7 @@ class CCompaniesTest extends CommonSetup
 
         $companies = $this->obj->getCompanyList();
 
-        $this->assertInternalType(PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $companies);
+        $this->assertIsArray($companies);
         $this->assertEquals(4,                             count($companies));
         $this->assertEquals(2,                             $companies[0]['company_id']);
         $this->assertEquals('CreatedCompany',              $companies[0]['company_name']);
@@ -250,7 +250,7 @@ class CCompaniesTest extends CommonSetup
     {
         $results = $this->obj->getCompanyList(null, 3);
 
-        $this->assertInternalType(PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $results);
+        $this->assertIsArray($results);
         $this->assertEquals(0, count($results));
     }
 
@@ -266,7 +266,7 @@ class CCompaniesTest extends CommonSetup
 
         $companies = $this->obj->getCompanyList(null, 1);
 
-        $this->assertInternalType(PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $companies);
+        $this->assertIsArray($companies);
         $this->assertEquals(1,                             count($companies));
         $this->assertEquals(2,                             $companies[0]['company_id']);
         $this->assertEquals('CreatedCompany',              $companies[0]['company_name']);
@@ -282,7 +282,7 @@ class CCompaniesTest extends CommonSetup
     {
         $results = $this->obj->getCompanyList(null, -1, 'This is a company');
 
-        $this->assertInternalType(PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $results);
+        $this->assertIsArray($results);
         $this->assertEquals(0, count($results));
     }
 
@@ -293,7 +293,7 @@ class CCompaniesTest extends CommonSetup
     {
         $results = $this->obj->getCompanyList(null, -1, '', 2);
 
-        $this->assertInternalType(PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $results);
+        $this->assertIsArray($results);
         $this->assertEquals(0, count($results));
     }
 
@@ -321,7 +321,7 @@ class CCompaniesTest extends CommonSetup
 
         $companies = $this->obj->getCompanyList(null, -1, '', 1);
 
-        $this->assertInternalType(PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $companies);
+        $this->assertIsArray($companies);
         $this->assertEquals(4,                             count($companies));
         $this->assertEquals(2,                             $companies[0]['company_id']);
         $this->assertEquals('CreatedCompany',              $companies[0]['company_name']);

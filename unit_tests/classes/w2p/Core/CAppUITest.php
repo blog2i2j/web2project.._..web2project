@@ -29,32 +29,32 @@ class w2p_Core_CAppUITest extends CommonSetup
         $AppUI = $this->_AppUI;
 
         $this->assertInstanceOf('w2p_Core_CAppUI',          $AppUI);
-        $this->assertObjectHasAttribute('state',            $AppUI);
-        $this->assertObjectHasAttribute('user_id',          $AppUI);
-        $this->assertObjectHasAttribute('user_first_name',  $AppUI);
-        $this->assertObjectHasAttribute('user_last_name',   $AppUI);
-        $this->assertObjectHasAttribute('user_company',     $AppUI);
-        $this->assertObjectHasAttribute('user_department',  $AppUI);
-        $this->assertObjectHasAttribute('user_email',       $AppUI);
-        $this->assertObjectHasAttribute('user_type',        $AppUI);
-        $this->assertObjectHasAttribute('user_prefs',       $AppUI);
-        $this->assertObjectHasAttribute('day_selected',     $AppUI);
-        $this->assertObjectHasAttribute('user_locale',      $AppUI);
-        $this->assertObjectHasAttribute('user_lang',        $AppUI);
-        $this->assertObjectHasAttribute('base_locale',      $AppUI);
-        $this->assertObjectHasAttribute('msg',              $AppUI);
-        $this->assertObjectHasAttribute('msgNo',            $AppUI);
-        $this->assertObjectHasAttribute('defaultRedirect',  $AppUI);
-        $this->assertObjectHasAttribute('cfg',              $AppUI);
-        $this->assertObjectHasAttribute('version_major',    $AppUI);
-        $this->assertObjectHasAttribute('version_minor',    $AppUI);
-        $this->assertObjectHasAttribute('version_patch',    $AppUI);
-        $this->assertObjectHasAttribute('version_string',   $AppUI);
-        $this->assertObjectHasAttribute('last_insert_id',   $AppUI);
-        $this->assertObjectHasAttribute('user_style',       $AppUI);
-        $this->assertObjectHasAttribute('long_date_format', $AppUI);
-        $this->assertObjectHasAttribute('objStore',         $AppUI);
-        $this->assertObjectHasAttribute('project_id',       $AppUI);
+        $this->assertTrue(property_exists($AppUI, 'state'),            'AppUI should have state property');
+        $this->assertTrue(property_exists($AppUI, 'user_id'),          'AppUI should have user_id property');
+        $this->assertTrue(property_exists($AppUI, 'user_first_name'),  'AppUI should have user_first_name property');
+        $this->assertTrue(property_exists($AppUI, 'user_last_name'),   'AppUI should have user_last_name property');
+        $this->assertTrue(property_exists($AppUI, 'user_company'),     'AppUI should have user_company property');
+        $this->assertTrue(property_exists($AppUI, 'user_department'),  'AppUI should have user_department property');
+        $this->assertTrue(property_exists($AppUI, 'user_email'),       'AppUI should have user_email property');
+        $this->assertTrue(property_exists($AppUI, 'user_type'),        'AppUI should have user_type property');
+        $this->assertTrue(property_exists($AppUI, 'user_prefs'),       'AppUI should have user_prefs property');
+        $this->assertTrue(property_exists($AppUI, 'day_selected'),     'AppUI should have day_selected property');
+        $this->assertTrue(property_exists($AppUI, 'user_locale'),      'AppUI should have user_locale property');
+        $this->assertTrue(property_exists($AppUI, 'user_lang'),        'AppUI should have user_lang property');
+        $this->assertTrue(property_exists($AppUI, 'base_locale'),      'AppUI should have base_locale property');
+        $this->assertTrue(property_exists($AppUI, 'msg'),              'AppUI should have msg property');
+        $this->assertTrue(property_exists($AppUI, 'msgNo'),            'AppUI should have msgNo property');
+        $this->assertTrue(property_exists($AppUI, 'defaultRedirect'),  'AppUI should have defaultRedirect property');
+        $this->assertTrue(property_exists($AppUI, 'cfg'),              'AppUI should have cfg property');
+        $this->assertTrue(property_exists($AppUI, 'version_major'),    'AppUI should have version_major property');
+        $this->assertTrue(property_exists($AppUI, 'version_minor'),    'AppUI should have version_minor property');
+        $this->assertTrue(property_exists($AppUI, 'version_patch'),    'AppUI should have version_patch property');
+        $this->assertTrue(property_exists($AppUI, 'version_string'),   'AppUI should have version_string property');
+        $this->assertTrue(property_exists($AppUI, 'last_insert_id'),   'AppUI should have last_insert_id property');
+        $this->assertTrue(property_exists($AppUI, 'user_style'),       'AppUI should have user_style property');
+        $this->assertTrue(property_exists($AppUI, 'long_date_format'), 'AppUI should have long_date_format property');
+        $this->assertTrue(property_exists($AppUI, 'objStore'),         'AppUI should have objStore property');
+        $this->assertTrue(property_exists($AppUI, 'project_id'),       'AppUI should have project_id property');
     }
 
     /**
@@ -102,7 +102,11 @@ class w2p_Core_CAppUITest extends CommonSetup
         $this->assertEquals('',         $AppUI->user_style);
         $this->assertEquals(0,          $AppUI->user_is_admin);
         $this->assertEquals('',         $AppUI->long_date_format);
-        $this->assertEquals('',         $this->readAttribute($AppUI, 'objStore'));
+        // Use reflection to read private/protected property
+        $reflection = new \ReflectionClass($AppUI);
+        $property = $reflection->getProperty('objStore');
+        $property->setAccessible(true);
+        $this->assertEquals('',         $property->getValue($AppUI));
         $this->assertEquals(0,          $AppUI->project_id);
     }
 

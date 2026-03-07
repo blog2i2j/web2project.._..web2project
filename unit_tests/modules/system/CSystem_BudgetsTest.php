@@ -19,10 +19,10 @@
 class CSystem_BudgetsTest extends CommonSetup
 {
 
-    protected function setUp()
+    protected function setUp(): void
     {
-      parent::setUp();
-
+        parent::setUp();
+        
       $this->obj    = new CSystem_Budget();
       $this->obj->overrideDatabase($this->mockDB);
 

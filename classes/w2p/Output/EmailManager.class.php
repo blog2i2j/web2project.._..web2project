@@ -217,7 +217,7 @@ class w2p_Output_EmailManager
 
     public function getTaskRemind(CTask $task, $msg, $project_name, $contacts)
     {
-        if(isnull($project_name) || $project_name=="")
+        if(is_null($project_name) || $project_name=="")
         {
             $project = new CProject();
             $project_name = $project->load($task->task_project)->project_name;

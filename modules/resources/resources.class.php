@@ -18,6 +18,7 @@ class CResource extends w2p_Core_BaseObject
 
     public function isValid()
     {
+        $this->_error = array();
         $baseErrorMsg = get_class($this) . '::store-check failed - ';
 
         if ('' == trim($this->resource_name)) {

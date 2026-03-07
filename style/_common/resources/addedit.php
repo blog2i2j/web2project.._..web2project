@@ -27,7 +27,7 @@ $form = new w2p_Output_HTML_FormHelper($AppUI);
             </p>
             <p>
                 <?php $form->showLabel('Notes'); ?>
-                <?php $form->showField('resource_note', $object->resource_description); ?>
+                <?php $form->showField('resource_description', $object->resource_description); ?>
             </p>
             <?php $form->showCancelButton(); ?>
             <?php $form->showSaveButton(); ?>

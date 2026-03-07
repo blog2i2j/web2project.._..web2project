@@ -6,3 +6,5 @@
 /files/*
 /docs/*
 /vendor/**
+composer.phar
+unit_tests/.phpunit.result.cache

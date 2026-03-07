@@ -14,7 +14,7 @@ if (!defined('W2P_BASE_DIR')) {
 
 $config = array();
 $config['mod_name']        = 'Resources';           // name the module
-$config['mod_version']     = '3.1.1';               // add a version number
+$config['mod_version']     = '3.1.2';               // add a version number
 $config['mod_directory']   = 'resources';           // tell web2project where to find this module
 $config['mod_setup_class'] = 'CSetupResources';     // the name of the PHP setup class (used below)
 $config['mod_type']        = 'user';                // 'core' for modules distributed with w2p by standard, 'user' for additional modules
@@ -33,7 +33,7 @@ if ($a == 'setup') {
 }
 
 /**
- * Class SResource
+ * Class CSetupResources
  *
  * @package     web2project\modules\misc
  */
@@ -49,6 +49,7 @@ class CSetupResources extends w2p_System_Setup
             resource_type integer not null default 0,
             resource_note text default null,
             resource_max_allocation integer not null default 100,
+            `resource_description` text,
             primary key (resource_id),
             key (resource_name),
             key (resource_type)
@@ -102,6 +103,7 @@ class CSetupResources extends w2p_System_Setup
                 $q->addField('resource_key', 'varchar(64) not null default ""');
                 $result = $q->exec();
                 $q->clear();
+            case '3.0.0':   // this is here on purpose
             case '1.0.1':
                 $this->convertTypes();
             case '1.1.0':
@@ -122,6 +124,16 @@ class CSetupResources extends w2p_System_Setup
                     $q->clear();
                 }
             case '3.1.1':
+                $q->alterTable('resources');
+                $q->alterField('resource_note', 'text default null');
+                $result = $q->exec();
+                $q->clear();
+
+                $q->alterTable('resources');
+                $q->alterField('resource_description', 'text default null');
+                $result = $q->exec();
+                $q->clear();
+            case '3.1.2':
                 //current version
             default:
                 break;

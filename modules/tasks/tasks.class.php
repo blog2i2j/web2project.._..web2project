@@ -63,6 +63,7 @@ class CTask extends w2p_Core_BaseObject
     public $task_updator = null;
     public $task_allow_other_user_tasklogs;
     public $task_path_enumeration = null;
+    public $task_represents_project = null;
 
     /*
      * TASK DYNAMIC VALUE:
@@ -2395,6 +2396,7 @@ class CTask extends w2p_Core_BaseObject
         $q->addQuery('task_id, task_name, task_parent, task_access, task_owner');
         $q->addQuery('task_start_date, task_end_date, task_percent_complete');
         $q->addQuery('task_duration, task_duration_type');
+        $q->addQuery('task_milestone, task_dynamic');
         $q->addOrder('task_parent, task_parent = task_id desc');
         $q->addTable('tasks', 't');
         if ($task_project) {
@@ -2480,7 +2482,7 @@ class CTask extends w2p_Core_BaseObject
     {
         $q = $this->_getQuery();
         $q->addTable('tasks');
-        $q->addUpdate('task_hours_worked', $totalHours + 0);
+        $q->addUpdate('task_hours_worked', (float) $totalHours);
         $q->addWhere('task_id = ' . $taskId);
         $q->exec();
         $q->clear();

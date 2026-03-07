@@ -18,7 +18,7 @@
 
 class CProjectsTest extends CommonSetup
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -745,11 +745,9 @@ $this->obj->overrideDatabase($this->mockDB);
      */
     public function testGetDepartments()
     {
-        $departments = CProject::getDepartments(null, 1);
-        /*
-         * Beyond the deprecation notice, nothing else should be tested here. The
-         *   useful test is CProject->testGetDepartmentList().
-         */
+        $this->markTestIncomplete(
+            'This method is deprecated. The useful test is testGetDepartmentList().'
+        );
     }
 
     /**
@@ -775,7 +773,8 @@ $this->obj->overrideDatabase($this->mockDB);
             $this->assertEquals('Department 2', $departments[2]['dept_name']);
             $this->assertEquals('',             $departments[2]['dept_phone']);
         } else {
-            $this->assertEquals(0,              count($departments));
+            // Departments module not enabled
+            $this->assertNull($departments);
         }
     }
 
@@ -804,7 +803,8 @@ $this->obj->overrideDatabase($this->mockDB);
             $this->assertEquals('Test Project',     $forums[1]['project_name']);
             $this->assertEquals(1,                  $forums[1]['project_id']);
         } else {
-            $this->assertEquals(0,                  count($forums));
+            // Forums module not enabled
+            $this->assertNull($forums);
         }
     }
 

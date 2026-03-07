@@ -19,7 +19,7 @@ class Web2project_Output_EmailManagerTest extends CommonSetup
 {
     protected $manager = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -31,8 +31,8 @@ class Web2project_Output_EmailManagerTest extends CommonSetup
         $event = new CEvent();
         $event->event_name = 'Something Cool';
         $event->event_id = -1;
-        $event->event_start_date = '2010-01-03 12:45:02';
-        $event->event_end_date = '2010-02-03 12:45:02';
+        $event->event_start_datetime = '2010-01-03 12:45:02';
+        $event->event_end_datetime = '2010-02-03 12:45:02';
         $event->event_type = 1;
         $event->event_description = 'This will be a great event.';
 

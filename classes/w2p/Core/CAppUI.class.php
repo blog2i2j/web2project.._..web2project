@@ -225,6 +225,10 @@ class w2p_Core_CAppUI
     public function convertToSystemTZ($datetime = '', $format = 'Y-m-d H:i:s')
     {
         $userTZ = $this->getPref('TIMEZONE');
+        if ($userTZ === null || $userTZ == '') {
+            // Avoid deprecated null to DateTimeZone
+            $userTZ = date_default_timezone_get();
+        }
         $userTimezone = new DateTimeZone($userTZ);
 
         $systemTimezone = new DateTimeZone('UTC');
@@ -801,7 +805,7 @@ class w2p_Core_CAppUI
         $q = new w2p_Database_Query;
         $q->addTable('users');
         $q->addQuery('user_id, contact_first_name as user_first_name, ' .
-            'contact_last_name as user_last_name, contact_display_name as user_display_name, ' .
+            'contact_last_name as user_last_name, ' . 
             'contact_company as user_company, contact_department as user_department, user_type');
         $q->addJoin('contacts', 'con', 'con.contact_id = user_contact', 'inner');
 
@@ -825,6 +829,12 @@ class w2p_Core_CAppUI
             $q->addWhere("cm.method_name = 'email_primary'");
             $q->addQuery('cm.method_value AS user_email');
         }
+        if ($dbVersion < 29) {
+            $q->addQuery("CONCAT(contact_first_name, ' ', contact_last_name) as user_display_name");
+        } else {
+            $q->addQuery('contact_display_name as user_display_name');
+        }
+
         /* End Hack */
 
         $q->addWhere('user_id = ' . (int) $user_id . ' AND user_username = \'' . $username . '\'');
@@ -850,9 +860,11 @@ class w2p_Core_CAppUI
 
     public function registerLogin()
     {
+        $userId = ($this->user_id > 0) ? $this->user_id : 1;
+
         $q = new w2p_Database_Query;
         $q->addTable('user_access_log');
-        $q->addInsert('user_id', '' . $this->user_id);
+        $q->addInsert('user_id', '' . $userId);
         $q->addInsert('date_time_in', "'" . $q->dbfnNowWithTZ() . "'", false, true);
         $q->addInsert('user_ip', $_SERVER['REMOTE_ADDR']);
         $q->exec();
