@@ -745,11 +745,9 @@ $this->obj->overrideDatabase($this->mockDB);
      */
     public function testGetDepartments()
     {
-        $departments = CProject::getDepartments(null, 1);
-        /*
-         * Beyond the deprecation notice, nothing else should be tested here. The
-         *   useful test is CProject->testGetDepartmentList().
-         */
+        $this->markTestIncomplete(
+            'This method is deprecated. The useful test is testGetDepartmentList().'
+        );
     }
 
     /**

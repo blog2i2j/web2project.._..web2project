@@ -12,7 +12,7 @@ if (!defined('E_DEPRECATED')) {
     // If we hit this, we're still running on PHP 5.2.x
     define('E_DEPRECATED', 8192);
 }
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_STRICT);
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 //error_reporting(-1);
 
 define('W2P_PERFORMANCE_DEBUG', false);
