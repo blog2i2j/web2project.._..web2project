@@ -188,7 +188,7 @@ if (!is_array($projects) || 0 == count($projects)) {
                     $columnValues = array('user_name' => '    * '.$w['contact_display_name'],
                         'start_date' => $t['task_start_date'], 'end_date' => $t['task_end_date'], 'actual_end' => '');
                     $height = ($t['task_dynamic'] == 1) ? 0.1 : 0.6;
-                    $gantt->addBar($columnValues, $w['user_name'], 0.6, $p['project_color_identifier'],
+                    $gantt->addBar($columnValues, $w['contact_display_name'], 0.6, $p['project_color_identifier'],
                         true, $t['task_percent_complete'], $t['task_id']);
                 }
                 // End of insert workers for each task into Gantt Chart
