@@ -13,6 +13,7 @@ class w2p_System_UpgradeManager {
     protected $tempDir = '';
     protected $configOptions = array();
     protected $updatesApplied = array();
+    protected $_w2Pconfig = '';
 
     public function __construct()
     {

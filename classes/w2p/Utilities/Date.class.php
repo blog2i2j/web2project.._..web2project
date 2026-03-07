@@ -546,12 +546,14 @@ class w2p_Utilities_Date extends Date {
         if(is_a($tz, 'Date_TimeZone')) {
             $tz = $tz->getID();
         }
+        if ($tz === null) {
+            // Avoid deprecated null to DateTimeZone
+            $tz = date_default_timezone_get();
+        }
         $newTZ = new DateTimeZone($tz);
 
-        $dt = new DateTime(
-                    $this->format('%D %H%M%S'), 
-                    new DateTimeZone($this->tz['id'])
-                );
+        $tzId = $this->tz['id'] ?? date_default_timezone_get();
+        $dt = new DateTime( $this->format('%D %H%M%S'), new DateTimeZone($tzId) );
         $dt->setTimezone($newTZ);
         $this->setDate($dt->format('Y-m-d H:i:s'));
         $this->setTZ($tz);
