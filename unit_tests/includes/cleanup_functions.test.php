@@ -16,9 +16,9 @@
  * @link        http://www.web2project.net
  */
 
-class Cleanup_Functions_Test extends PHPUnit_Framework_TestCase
+class Cleanup_Functions_Test extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

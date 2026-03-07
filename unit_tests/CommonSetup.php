@@ -37,7 +37,7 @@ $_REQUEST['login'] = 'sql';
 $AppUI->login('admin', 'passwd');
 $AppUI->user_email = 'something@something.com';
 
-class CommonSetup extends PHPUnit_Framework_TestCase
+class CommonSetup extends \PHPUnit\Framework\TestCase
 {
     protected $backupGlobals = false;
     protected $obj = null;
@@ -45,7 +45,7 @@ class CommonSetup extends PHPUnit_Framework_TestCase
     protected $mockDB = null;
     protected $_AppUI = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -56,7 +56,7 @@ class CommonSetup extends PHPUnit_Framework_TestCase
         $this->mockDB = new w2p_Mocks_Query();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         unset($this->obj, $this->post_data);
 
