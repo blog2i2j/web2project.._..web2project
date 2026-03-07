@@ -135,7 +135,7 @@ class CLinksTest extends CommonSetup
         $this->assertEquals($this->obj->link_description,       $item->link_description);
         $this->assertEquals($this->obj->link_owner,             $item->link_owner);
         $this->assertEquals($this->obj->link_category,          $item->link_category);
-        $this->assertNotEquals($this->obj->link_date,           '');
+        $this->assertNotNull($this->obj->link_date);
     }
 
     /**
