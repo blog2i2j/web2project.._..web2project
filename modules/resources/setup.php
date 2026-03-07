@@ -33,7 +33,7 @@ if ($a == 'setup') {
 }
 
 /**
- * Class SResource
+ * Class CSetupResources
  *
  * @package     web2project\modules\misc
  */
@@ -49,6 +49,7 @@ class CSetupResources extends w2p_System_Setup
             resource_type integer not null default 0,
             resource_note text default null,
             resource_max_allocation integer not null default 100,
+            `resource_description` text,
             primary key (resource_id),
             key (resource_name),
             key (resource_type)
