@@ -87,6 +87,9 @@ if (isset($user_id) && isset($_GET['logout'])) {
 
 // set the default ui style
 $uistyle = $AppUI->getPref('UISTYLE') ? $AppUI->getPref('UISTYLE') : w2PgetConfig('host_style');
+$uistyle = ($uistyle == 'default') ? 'web2project' : $uistyle;
+$AppUI->setPref('UISTYLE', $uistyle);
+
 include W2P_BASE_DIR . '/style/' . $uistyle . '/overrides.php';
 $uiName = str_replace('-', '', $uistyle);
 
