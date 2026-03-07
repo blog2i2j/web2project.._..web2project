@@ -2481,7 +2481,7 @@ class CTask extends w2p_Core_BaseObject
     {
         $q = $this->_getQuery();
         $q->addTable('tasks');
-        $q->addUpdate('task_hours_worked', $totalHours + 0);
+        $q->addUpdate('task_hours_worked', (float) $totalHours);
         $q->addWhere('task_id = ' . $taskId);
         $q->exec();
         $q->clear();
