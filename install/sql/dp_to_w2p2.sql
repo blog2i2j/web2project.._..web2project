@@ -113,7 +113,6 @@ UPDATE `modules` SET `permissions_item_table` = 'departments', `permissions_item
 UPDATE `config` SET `config_value` = "web2project" WHERE `config_name` = "host_style";
 UPDATE `config` SET `config_value` = "[web2Project]" WHERE `config_name` = "email_prefix" AND `config_value` = "[dotProject]";
 
-ALTER TABLE `sysvals` DROP INDEX `idx_sysval_title`;
 # Add New sysvals:
 INSERT INTO `sysvals` (`sysval_key_id`, `sysval_title`, `sysval_value`, `sysval_value_id`) VALUES (1, 'GlobalYesNo', 'No', '0');
 INSERT INTO `sysvals` (`sysval_key_id`, `sysval_title`, `sysval_value`, `sysval_value_id`) VALUES (1, 'GlobalYesNo', 'Yes', '1');
@@ -389,7 +388,6 @@ ALTER TABLE `files` ADD INDEX ( `file_name` );
 ALTER TABLE `tasks` ADD INDEX ( `task_priority` );
 ALTER TABLE `user_tasks` ADD INDEX ( `perc_assignment` );
 ALTER TABLE `tasks` ADD INDEX ( `task_name` );
-ALTER TABLE `forums` ADD INDEX ( `forum_name` );
 ALTER TABLE `task_log` ADD INDEX ( `task_log_date` );
 ALTER TABLE `billingcode` ADD INDEX ( `billingcode_name` );
 ALTER TABLE `task_log` ADD INDEX ( `task_log_creator` );
@@ -398,7 +396,6 @@ ALTER TABLE `gacl_permissions` ADD INDEX ( `action` );
 ALTER TABLE `sysvals` ADD INDEX ( `sysval_title` );
 ALTER TABLE `projects` ADD INDEX ( `project_parent` );
 
-ALTER TABLE `user_access_log` ADD INDEX ( `date_time_last_action` );
 # Extra Indexes for Group By
 ALTER TABLE `files` ADD INDEX ( `file_folder` );
 
@@ -414,8 +411,6 @@ ALTER TABLE `custom_fields_struct` ADD INDEX ( `field_page` );
 ALTER TABLE `modules` ADD INDEX ( `mod_active` );
 ALTER TABLE `modules` ADD INDEX ( `mod_directory` );
 ALTER TABLE `user_preferences` ADD INDEX ( `pref_user` );
-ALTER TABLE `user_access_log` ADD INDEX ( `date_time_in` );
-ALTER TABLE `user_access_log` ADD INDEX ( `date_time_out` );
 ALTER TABLE `modules` ADD INDEX ( `permissions_item_table` );
 ALTER TABLE `users` ADD INDEX ( `user_contact` );
 ALTER TABLE `events` ADD INDEX ( `event_recurs` );
@@ -452,8 +447,12 @@ ALTER TABLE `task_contacts` ADD INDEX ( `task_id` );
 ALTER TABLE `task_contacts` ADD INDEX ( `contact_id` );
 
 # Further improvements
-ALTER TABLE `contacts` CHANGE `contact_company` `contact_company` INT( 11 ) NOT NULL DEFAULT "0";
-ALTER TABLE `contacts` CHANGE `contact_department` `contact_department` INT( 11 ) NOT NULL DEFAULT "0";
+UPDATE `contacts` SET `contact_company` = 0 WHERE `contact_company` = '';
+ALTER TABLE `contacts` CHANGE `contact_company` `contact_company` INT NULL;
+UPDATE `contacts` SET `contact_company` = NULL WHERE `contact_company` = 0;
+UPDATE `contacts` SET `contact_department` = 0 WHERE `contact_department` = '';
+ALTER TABLE `contacts` CHANGE `contact_department` `contact_department` INT NULL;
+UPDATE `contacts` SET `contact_department` = NULL WHERE `contact_department` = 0;
 ALTER TABLE `contacts` ADD INDEX ( `contact_department` );
 ALTER TABLE `files` CHANGE `file_checkout` `file_checkout` VARCHAR( 16 ) NOT NULL DEFAULT "";
 ALTER TABLE `departments` CHANGE `dept_name` `dept_name` VARCHAR( 255 ) NOT NULL DEFAULT "";
@@ -474,12 +473,11 @@ DROP TABLE IF EXISTS `webcal_resources`;
 
 # Convert the dpversion table to w2p version
 CREATE TABLE `w2pversion` (
-  `code_revision` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `code_version` varchar(10) NOT NULL default '',
   `db_version` int(10) NOT NULL default '0',
   `last_db_update` date NOT NULL default '1000-01-01',
   `last_code_update` date NOT NULL default '1000-01-01',
-  PRIMARY KEY  (`code_revision`)
+  PRIMARY KEY  (`code_version`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 UPDATE `dpversion` SET `last_db_update` = '1000-01-01' where `last_db_update` < '1000-01-01';
 UPDATE `dpversion` SET `last_code_update` = '1000-01-01' where `last_code_update` < '1000-01-01';
@@ -501,11 +499,11 @@ ALTER TABLE `departments` ADD `dept_type` INT(3) UNSIGNED NOT NULL DEFAULT '0';
 ALTER TABLE `projects` ADD `project_updator` INT(10) DEFAULT 0 NOT NULL;
 ALTER TABLE `projects` ADD `project_updated` datetime NOT NULL default '1000-01-01 00:00:00';
 ALTER TABLE `tasks` ADD `task_updator` INT(10) DEFAULT 0 NOT NULL;
-ALTER TABLE `tasks` ADD `task_created` datetime NOT NULL default '1000-01-01 00:00:00';
-ALTER TABLE `tasks` ADD `task_updated` datetime NOT NULL default '1000-01-01 00:00:00';
+ALTER TABLE `tasks` ADD `task_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE `tasks` ADD `task_updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
 ALTER TABLE `task_log` ADD `task_log_updator` INT(10) DEFAULT 0 NOT NULL;
-ALTER TABLE `task_log` ADD `task_log_updated` datetime NOT NULL default '1000-01-01 00:00:00';
-ALTER TABLE `task_log` ADD `task_log_created` datetime NOT NULL default '1000-01-01 00:00:00';
+ALTER TABLE `task_log` ADD `task_log_updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE `task_log` ADD `task_log_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
 # new PHPMailer SMTP options
 INSERT INTO `config` (`config_name`, `config_value`, `config_group`, `config_type`) VALUES ('mail_secure', '', 'mail', 'select');
@@ -522,7 +520,7 @@ INSERT INTO `sysvals` (`sysval_key_id`, `sysval_title`, `sysval_value`, `sysval_
 INSERT INTO `sysvals` (`sysval_key_id`, `sysval_title`, `sysval_value`, `sysval_value_id`) VALUES (1, 'DepartmentType', 'Profit', '1');
 INSERT INTO `sysvals` (`sysval_key_id`, `sysval_title`, `sysval_value`, `sysval_value_id`) VALUES (1, 'DepartmentType', 'Cost', '2');
 
-#Company Description fix 20080304
+# Company Description fix 20080304
 ALTER TABLE `companies` CHANGE `company_description` `company_description` TEXT NULL;
 
 # Tasks Collpase/Expand User Default Value
@@ -616,7 +614,6 @@ ALTER TABLE `tasks_sum` CHANGE `project_duration` `project_duration` FLOAT NULL 
 
 # 20090128
 ALTER TABLE `w2pversion` ADD `code_revision` INT( 10 ) NOT NULL FIRST ;
-ALTER TABLE `w2pversion` ADD PRIMARY KEY ( `code_revision` );
 TRUNCATE TABLE `w2pversion`;
 INSERT INTO `w2pversion` (`code_revision` ,`code_version` ,`db_version` ,`last_db_update` ,`last_code_update`)
 	VALUES ('427', '1.0.0', '1', now(), now());
