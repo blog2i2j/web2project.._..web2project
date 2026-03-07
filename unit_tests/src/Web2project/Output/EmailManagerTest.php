@@ -19,7 +19,7 @@ class Web2project_Output_EmailManagerTest extends CommonSetup
 {
     protected $manager = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

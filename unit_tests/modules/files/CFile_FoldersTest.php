@@ -19,7 +19,7 @@
 class CFile_FoldersTest extends CommonSetup
 {
 
-    protected function setUp()
+    protected function setUp(): void
     {
       parent::setUp();
 

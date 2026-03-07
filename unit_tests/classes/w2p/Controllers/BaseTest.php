@@ -18,7 +18,7 @@
 
 class w2p_Controllers_BaseTest extends CommonSetup
 {
-    protected function setUp()
+    protected function setUp(): void
     {
       parent::setUp();
 
@@ -50,12 +50,12 @@ class w2p_Controllers_BaseTest extends CommonSetup
     public function testNewBaseAttributes()
     {
         $this->assertInstanceOf('w2p_Controllers_Base',     $this->obj);
-        $this->assertObjectHasAttribute('delete',           $this->obj);
-        $this->assertObjectHasAttribute('successPath',      $this->obj);
-        $this->assertObjectHasAttribute('errorPath',        $this->obj);
-        $this->assertObjectHasAttribute('object',           $this->obj);
-        $this->assertObjectHasAttribute('success',          $this->obj);
-        $this->assertObjectHasAttribute('resultPath',       $this->obj);
+        $this->assertTrue(property_exists($this->obj, 'delete'),           'Object should have delete property');
+        $this->assertTrue(property_exists($this->obj, 'successPath'),      'Object should have successPath property');
+        $this->assertTrue(property_exists($this->obj, 'errorPath'),        'Object should have errorPath property');
+        $this->assertTrue(property_exists($this->obj, 'object'),           'Object should have object property');
+        $this->assertTrue(property_exists($this->obj, 'success'),          'Object should have success property');
+        $this->assertTrue(property_exists($this->obj, 'resultPath'),       'Object should have resultPath property');
         $this->assertInstanceOf('CLink',                    $this->obj->object);
     }
 

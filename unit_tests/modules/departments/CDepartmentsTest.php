@@ -19,10 +19,8 @@
 class CDepartmentsTest extends CommonSetup
 {
 
-    protected function setUp()
+    protected function setUp(): void
     {
-      parent::setUp();
-
       $this->obj = new CDepartment();
       $this->obj->overrideDatabase($this->mockDB);
 

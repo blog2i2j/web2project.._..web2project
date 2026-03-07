@@ -18,7 +18,7 @@
 
 class w2p_Core_UpgradeManagerTest extends CommonSetup
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -51,16 +51,16 @@ class w2p_Core_UpgradeManagerTest extends CommonSetup
         global $w2Pconfig;
 
         $configString = $this->obj->createConfigString($w2Pconfig);
-        $this->assertRegExp('/dbtype/', $configString);
-        $this->assertRegExp('/'.$w2Pconfig['dbtype'].'/', $configString);
-        $this->assertRegExp('/dbhost/', $configString);
-        $this->assertRegExp('/'.$w2Pconfig['dbhost'].'/', $configString);
-        $this->assertRegExp('/dbname/', $configString);
-        $this->assertRegExp('/'.$w2Pconfig['dbname'].'/', $configString);
-        $this->assertRegExp('/dbuser/', $configString);
-        $this->assertRegExp('/'.$w2Pconfig['dbuser'].'/', $configString);
-        $this->assertRegExp('/dbpass/', $configString);
-        $this->assertRegExp('/'.$w2Pconfig['dbpass'].'/', $configString);
+        $this->assertMatchesRegularExpression('/dbtype/', $configString);
+        $this->assertMatchesRegularExpression('/'.$w2Pconfig['dbtype'].'/', $configString);
+        $this->assertMatchesRegularExpression('/dbhost/', $configString);
+        $this->assertMatchesRegularExpression('/'.$w2Pconfig['dbhost'].'/', $configString);
+        $this->assertMatchesRegularExpression('/dbname/', $configString);
+        $this->assertMatchesRegularExpression('/'.$w2Pconfig['dbname'].'/', $configString);
+        $this->assertMatchesRegularExpression('/dbuser/', $configString);
+        $this->assertMatchesRegularExpression('/'.$w2Pconfig['dbuser'].'/', $configString);
+        $this->assertMatchesRegularExpression('/dbpass/', $configString);
+        $this->assertMatchesRegularExpression('/'.$w2Pconfig['dbpass'].'/', $configString);
     }
 
     public function testGetMaxFileUpload()

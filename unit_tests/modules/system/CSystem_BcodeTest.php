@@ -19,10 +19,8 @@
 class CSystem_BcodeTest extends CommonSetup
 {
 
-    protected function setUp()
+    protected function setUp(): void
     {
-      parent::setUp();
-
       $this->obj    = new CSystem_Bcode();
       $this->obj->overrideDatabase($this->mockDB);
 

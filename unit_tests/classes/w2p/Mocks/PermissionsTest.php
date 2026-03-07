@@ -20,7 +20,7 @@ class w2p_Mocks_PermissionsTest extends CommonSetup
 {
     protected $perms = null;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->perms = new w2p_Mocks_Permissions();

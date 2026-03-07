@@ -81,9 +81,9 @@ class w2p_Mocks_Query extends w2p_Database_Query
     }
 
 
-    public function exec()
+    public function &exec($style = ADODB_FETCH_BOTH, $debug = false)
     {
-        return true;
+        return $this->result;
     }
 
     public function insertObject($table, &$object, $keyName = null, $verbose = false)
