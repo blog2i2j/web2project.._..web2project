@@ -17,8 +17,16 @@
 -- (C) 2014 WEB2PROJECT DEVELOPMENT TEAM
 --
 
+# 2026 Update - setting to handle non-null datetimes
+TRUNCATE TABLE `sessions`;
+ALTER TABLE `sessions` CHANGE `session_created` `session_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
 # 0060809
-ALTER TABLE `sessions` ADD `session_user` INT DEFAULT '0' NOT NULL AFTER `session_id`;
+ALTER TABLE `sessions` CHANGE `session_user` `session_user` INT NOT NULL DEFAULT '0';
+
+# 2026 Update - setting to eliminate '0000-00-00 00:00:00' datetimes
+ALTER TABLE `projects` CHANGE `project_end_date` `project_end_date` DATETIME NULL;
+UPDATE `projects` SET `project_end_date` = NULL WHERE CAST(`project_end_date` AS CHAR(20)) = '0000-00-00 00:00:00';
 
 # 20061119
 # archived status, do the second line only if project_status name matches 'Archived'
@@ -76,8 +84,8 @@ UPDATE `user_preferences` SET `pref_value` = "web2project" WHERE `pref_name` = "
 
 ALTER TABLE `sysvals` ADD `sysval_value_id` VARCHAR(128) DEFAULT '0' NULL;
 
-#20090813
-#updated the database structure to handle some oddball dotProject 2.1.2 items
+# 20090813
+# Updated the database structure to handle some oddball dotProject 2.1.2 items
 CREATE TABLE IF NOT EXISTS `event_contacts` (
   `event_id` int(10) NOT NULL default '0',
   `contact_id` int(10) NOT NULL default '0',
@@ -102,48 +110,3 @@ CREATE TABLE IF NOT EXISTS `project_designer_options` (
   PRIMARY KEY  (`pd_option_id`),
   UNIQUE KEY `pd_option_user` (`pd_option_user`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
--- 
--- Table structure for table `resources`
--- 
-
-CREATE TABLE IF NOT EXISTS `resources` (
-  `resource_id` int(11) NOT NULL auto_increment,
-  `resource_name` varchar(255) NOT NULL default '',
-  `resource_key` varchar(64) NOT NULL default '',
-  `resource_type` int(11) NOT NULL default '0',
-  `resource_note` text NOT NULL,
-  `resource_max_allocation` int(11) NOT NULL default '100',
-  PRIMARY KEY  (`resource_id`),
-  KEY `resource_name` (`resource_name`),
-  KEY `resource_type` (`resource_type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
--- 
--- Table structure for table `resource_tasks`
--- 
-
-CREATE TABLE IF NOT EXISTS `resource_tasks` (
-  `resource_id` int(11) NOT NULL default '0',
-  `task_id` int(11) NOT NULL default '0',
-  `percent_allocated` int(11) NOT NULL default '100',
-  KEY `resource_id` (`resource_id`),
-  KEY `task_id` (`task_id`,`resource_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
--- 
--- Table structure for table `resource_types`
--- 
-
-CREATE TABLE IF NOT EXISTS `resource_types` (
-  `resource_type_id` int(11) NOT NULL auto_increment,
-  `resource_type_name` varchar(255) NOT NULL default '',
-  `resource_type_note` text,
-  PRIMARY KEY  (`resource_type_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
