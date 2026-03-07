@@ -142,7 +142,8 @@ class w2p_System_UpgradeManager {
                 $allErrors = array_merge($allErrors, $errorMessages);
             /**
              * This default case will handle any other version of dotproject but has been validated to handle:
-             *     2.0.2, 2.0.3, 2.0.4, 2.1-rc1, 2.1-rc2, 2.1, 2.1.1, 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6, 2.1.7, 2.1.8
+             *      2.0.2, 2.0.3, 2.0.4, 
+             *      2.1-rc1, 2.1-rc2, 2.1, 2.1.1, 2.1.2, 2.1.3, 2.1.4, 2.1.5, 2.1.6, 2.1.7, 2.1.8
              */
             default:
                 $errorMessages = $this->_applySQLUpdates('dp21rc1_to_21rc2.sql', $dbConn);
