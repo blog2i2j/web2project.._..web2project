@@ -773,7 +773,8 @@ $this->obj->overrideDatabase($this->mockDB);
             $this->assertEquals('Department 2', $departments[2]['dept_name']);
             $this->assertEquals('',             $departments[2]['dept_phone']);
         } else {
-            $this->assertEquals(0,              count($departments));
+            // Departments module not enabled
+            $this->assertNull($departments);
         }
     }
 
@@ -802,7 +803,8 @@ $this->obj->overrideDatabase($this->mockDB);
             $this->assertEquals('Test Project',     $forums[1]['project_name']);
             $this->assertEquals(1,                  $forums[1]['project_id']);
         } else {
-            $this->assertEquals(0,                  count($forums));
+            // Forums module not enabled
+            $this->assertNull($forums);
         }
     }
 
