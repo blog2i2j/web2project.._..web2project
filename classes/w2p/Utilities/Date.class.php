@@ -546,7 +546,7 @@ class w2p_Utilities_Date extends Date {
         if(is_a($tz, 'Date_TimeZone')) {
             $tz = $tz->getID();
         }
-        if ($tz === null) {
+        if ($tz === null || $tz == '') {
             // Avoid deprecated null to DateTimeZone
             $tz = date_default_timezone_get();
         }
@@ -564,6 +564,11 @@ class w2p_Utilities_Date extends Date {
     public function setTZ($tz)
     {
         $tz_array = [];
+        if ($tz === null || $tz == '') {
+            // Avoid deprecated null to DateTimeZone
+            $tz = date_default_timezone_get();
+        }
+
         $timezone_info = CarbonTimeZone::create($tz);
 
         $_offset = explode(':', $timezone_info->toOffsetName());

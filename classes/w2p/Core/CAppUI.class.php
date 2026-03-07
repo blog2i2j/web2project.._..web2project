@@ -225,6 +225,10 @@ class w2p_Core_CAppUI
     public function convertToSystemTZ($datetime = '', $format = 'Y-m-d H:i:s')
     {
         $userTZ = $this->getPref('TIMEZONE');
+        if ($userTZ === null || $userTZ == '') {
+            // Avoid deprecated null to DateTimeZone
+            $userTZ = date_default_timezone_get();
+        }
         $userTimezone = new DateTimeZone($userTZ);
 
         $systemTimezone = new DateTimeZone('UTC');
